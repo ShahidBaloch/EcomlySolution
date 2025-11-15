@@ -1,3 +1,4 @@
+using Ecomly.API.Middlewares;
 using Ecomly.Core;
 using Ecomly.Infrastructure;
 
@@ -10,6 +11,7 @@ builder.Services.AddCore();
 builder.Services.AddControllers();
 //Build the Web application
 var app = builder.Build();
+app.UseExceptionHandlingMiddleware();
 //Routing
 app.UseRouting();
 //Auth
