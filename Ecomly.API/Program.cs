@@ -22,11 +22,28 @@ internal class Program
         builder.Services.AddAutoMapper(typeof(AppUserMappingProfile).Assembly);
         //builder.Services.AddFluentValidationAutoValidation();
         builder.Services.AddFluentValidationAutoValidation();
+
+        // Add API explorer services
+        builder.Services.AddEndpointsApiExplorer();
+        // Add Swagger services
+        builder.Services.AddSwaggerGen();
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+            });
+        });
         //Build the Web application
         var app = builder.Build();
         app.UseExceptionHandlingMiddleware();
         //Routing
         app.UseRouting();
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
+        app.UseCors();
         //Auth
         app.UseAuthentication();
         app.UseAuthorization();
